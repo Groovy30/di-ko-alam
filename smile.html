@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Di ko alam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffcccb;
+            color: #333;
+            padding: 50px;
+        }
+        h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        audio {
+            margin-bottom: 20px;
+        }
+        img {
+            width: 400px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn {
+            padding: 10px 25px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #ff4757;
+            color: white;
+            transition: transform 0.2s, opacity 0.3s;
+            margin: 10px;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h2>Di ko alam ano ititle dito bahala kana diyan</h2>
+    <p>hinaan mo na volume mo kung ako sayo, meron kang 2:34 seconds para makinig at mag pahinga</p>
+
+    <!-- Audio Player -->
+    <audio controls autoplay>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <br>
+    <img src="cute.jpg" alt="Cute Picture">
+    <br>
+
+    <!-- Back Button -->
+    <button class="btn" onclick="goBack()">Back</button>
+
+    <button class="btn" onclick="clickCounter()">Click 5 Times</button>
+    <script>
+        let clickCount = 0;
+    
+        function goBack() {
+            window.location.href = "solution.html";
+        }
+    
+        function clickCounter() {
+            clickCount++;
+            if (clickCount === 5) {
+                alert("Uto uto ampota");
+                clickCount = 0; // Reset count so it happens again on the next 5 clicks
+            }
+        }
+    </script>
+</body>
+</html>
