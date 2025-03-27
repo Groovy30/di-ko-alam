@@ -12,52 +12,57 @@
             text-align: center;
             background-color: #1e1e2e;
             color: #f8f8f8;
-            padding: 5vw;
+            padding: 50px;
         }
         h2 {
-            font-size: clamp(24px, 5vw, 48px);
+            font-size: 48px;
             font-weight: 700;
-            margin-bottom: 2vw;
+            margin-bottom: 20px;
         }
         p {
-            font-size: clamp(16px, 2.5vw, 24px);
-            margin-bottom: 3vw;
+            font-size: 24px;
+            margin-bottom: 30px;
         }
         .btn {
-            padding: 4vw 8vw;
-            margin: 2vw auto;
-            font-size: clamp(16px, 2.5vw, 24px);
+            padding: 20px 40px;
+            margin: 15px;
+            font-size: 24px;
             font-weight: 600;
             border: none;
             cursor: pointer;
             border-radius: 12px;
             transition: transform 0.2s, opacity 0.3s;
             display: block;
+            width: 400px;
             max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
         .btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
             opacity: 0.9;
         }
-        .low { background-color: #4CAF50; color: white; }
-        .mid { background-color: #FFC107; color: black; }
-        .high { background-color: #FF5722; color: white; }
-        .max { background-color: #D32F2F; color: white; }
+        .low { background-color: #4CAF50; color: white; box-shadow: 0px 6px 12px rgba(76, 175, 80, 0.5); }
+        .mid { background-color: #FFC107; color: black; box-shadow: 0px 6px 12px rgba(255, 193, 7, 0.5); }
+        .high { background-color: #FF5722; color: white; box-shadow: 0px 6px 12px rgba(244, 67, 54, 0.5); }
+        .max { background-color: #D32F2F; color: white; box-shadow: 0px 6px 12px rgba(211, 47, 47, 0.5); }
         #result {
-            margin-top: 4vw;
-            font-size: clamp(18px, 3vw, 28px);
+            margin-top: 40px;
+            font-size: 28px;
             font-weight: 600;
             background: rgba(255, 255, 255, 0.1);
-            padding: 3vw;
+            padding: 25px;
             border-radius: 12px;
             display: inline-block;
-            max-width: 90%;
+            min-width: 400px;
+            max-width: 80%;
             word-wrap: break-word;
         }
         #solutionBtn {
             display: none;
             background-color: #8e44ad;
             color: white;
+            box-shadow: 0px 6px 12px rgba(142, 68, 173, 0.5);
         }
     </style>
     <script>
@@ -75,6 +80,8 @@
             }
 
             document.getElementById("result").innerText = message;
+
+            // Show the "Oh eto solusyon" button
             document.getElementById("solutionBtn").style.display = "block";
         }
 
