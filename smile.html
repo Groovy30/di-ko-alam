@@ -10,26 +10,28 @@
             text-align: center;
             background-color: #ffcccb;
             color: #333;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
         h2 {
-            font-size: 32px;
+            font-size: 40px;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        p {
+            position: relative;
+            z-index: 2;
         }
         audio {
             margin-bottom: 20px;
-        }
-        img {
-            width: 80%;
-            max-width: 400px;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
         }
         .btn {
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 10px 25px;
+            font-size: 20px;
             font-weight: bold;
             border: none;
             cursor: pointer;
@@ -38,16 +40,21 @@
             color: white;
             transition: transform 0.2s, opacity 0.3s;
             margin: 10px;
+            position: relative;
+            z-index: 2;
         }
         .btn:hover {
             transform: scale(1.1);
             opacity: 0.9;
         }
-        #drawingCanvas {
-            border: 2px solid black;
-            background-color: white;
-            display: none;
-            margin-top: 20px;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: crosshair;
         }
     </style>
 </head>
@@ -55,23 +62,27 @@
     <h2>Di ko alam ano ititle dito bahala kana diyan</h2>
     <p>hinaan mo na volume mo kung ako sayo, meron kang 2:34 seconds para makinig at mag pahinga</p>
 
+    <!-- Audio Player (Paused on Load) -->
     <audio id="myAudio" controls>
         <source src="song.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
     <br>
-    <img src="cute.jpg" alt="Cute Picture">
-    <br>
-
     <button class="btn" onclick="goBack()">Back</button>
     <button class="btn" onclick="clickCounter()">Click 5 Times</button>
-    <button class="btn" onclick="toggleCanvas()">Customize</button>
-    
-    <canvas id="drawingCanvas" width="400" height="400"></canvas>
+
+    <!-- Drawing Canvas -->
+    <canvas id="drawingCanvas"></canvas>
 
     <script>
         let clickCount = 0;
+        const canvas = document.getElementById("drawingCanvas");
+        const ctx = canvas.getContext("2d");
+        let drawing = false;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         function goBack() {
             window.location.href = "solution.html";
@@ -85,36 +96,27 @@
             }
         }
 
-        window.onload = function() {
-            let audio = document.getElementById("myAudio");
-            audio.pause();
-        };
-
-        function toggleCanvas() {
-            let canvas = document.getElementById("drawingCanvas");
-            canvas.style.display = canvas.style.display === "none" ? "block" : "none";
-        }
-
-        // Drawing Functionality
-        const canvas = document.getElementById("drawingCanvas");
-        const ctx = canvas.getContext("2d");
-        let drawing = false;
-
+        // Drawing functions
         canvas.addEventListener("mousedown", () => drawing = true);
         canvas.addEventListener("mouseup", () => drawing = false);
         canvas.addEventListener("mousemove", draw);
 
         function draw(event) {
             if (!drawing) return;
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 3;
             ctx.lineCap = "round";
             ctx.strokeStyle = "black";
-
-            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.lineTo(event.clientX, event.clientY);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(event.offsetX, event.offsetY);
+            ctx.moveTo(event.clientX, event.clientY);
         }
+
+        // Pause audio when the page loads
+        window.onload = function() {
+            let audio = document.getElementById("myAudio");
+            audio.pause();
+        };
     </script>
 </body>
 </html>
