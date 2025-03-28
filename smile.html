@@ -10,25 +10,26 @@
             text-align: center;
             background-color: #ffcccb;
             color: #333;
-            padding: 50px;
+            padding: 20px;
         }
         h2 {
-            font-size: 40px;
+            font-size: 32px;
             margin-bottom: 20px;
         }
         audio {
             margin-bottom: 20px;
         }
         img {
-            width: 400px;
+            width: 80%;
+            max-width: 400px;
             height: auto;
             margin-bottom: 20px;
             border-radius: 20px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .btn {
-            padding: 10px 25px;
-            font-size: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
             font-weight: bold;
             border: none;
             cursor: pointer;
@@ -42,13 +43,18 @@
             transform: scale(1.1);
             opacity: 0.9;
         }
+        #drawingCanvas {
+            border: 2px solid black;
+            background-color: white;
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h2>Di ko alam ano ititle dito bahala kana diyan</h2>
     <p>hinaan mo na volume mo kung ako sayo, meron kang 2:34 seconds para makinig at mag pahinga</p>
 
-    <!-- Audio Player (Paused on Load) -->
     <audio id="myAudio" controls>
         <source src="song.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -58,9 +64,11 @@
     <img src="cute.jpg" alt="Cute Picture">
     <br>
 
-    <!-- Buttons -->
     <button class="btn" onclick="goBack()">Back</button>
     <button class="btn" onclick="clickCounter()">Click 5 Times</button>
+    <button class="btn" onclick="toggleCanvas()">Customize</button>
+    
+    <canvas id="drawingCanvas" width="400" height="400"></canvas>
 
     <script>
         let clickCount = 0;
@@ -77,11 +85,36 @@
             }
         }
 
-        // Pause audio when the page loads
         window.onload = function() {
             let audio = document.getElementById("myAudio");
             audio.pause();
         };
+
+        function toggleCanvas() {
+            let canvas = document.getElementById("drawingCanvas");
+            canvas.style.display = canvas.style.display === "none" ? "block" : "none";
+        }
+
+        // Drawing Functionality
+        const canvas = document.getElementById("drawingCanvas");
+        const ctx = canvas.getContext("2d");
+        let drawing = false;
+
+        canvas.addEventListener("mousedown", () => drawing = true);
+        canvas.addEventListener("mouseup", () => drawing = false);
+        canvas.addEventListener("mousemove", draw);
+
+        function draw(event) {
+            if (!drawing) return;
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "black";
+
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+        }
     </script>
 </body>
 </html>
