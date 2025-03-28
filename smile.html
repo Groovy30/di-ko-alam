@@ -14,7 +14,7 @@
             padding: 0;
             overflow: hidden;
         }
-        h2, p, audio, .btn-container, img {
+        h2, p, audio, .btn-container, img, .input-container {
             position: relative;
             z-index: 2;
         }
@@ -54,6 +54,16 @@
             cursor: crosshair;
             display: none;
         }
+        .input-container {
+            margin-top: 20px;
+        }
+        .input-container input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #333;
+        }
     </style>
 </head>
 <body>
@@ -61,10 +71,12 @@
     <p>hinaan mo na volume mo kung ako sayo, meron kang 2:34 seconds para makinig at mag pahinga</p>
 
     <!-- Audio Player (Paused on Load) -->
-    <audio id="myAudio" controls>
-        <source src="song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <div id="mediaContainer">
+        <audio id="myAudio" controls>
+            <source src="song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
 
     <br>
     <img src="cute.jpg" alt="Cute Picture">
@@ -74,6 +86,12 @@
         <button class="btn" onclick="goBack()">Back</button>
         <button class="btn" onclick="clickCounter()">Click 5 Times</button>
         <button class="btn" onclick="toggleDrawing()">Customize</button>
+    </div>
+
+    <!-- Input for Custom Music -->
+    <div class="input-container">
+        <input type="text" id="mediaInput" placeholder="Enter YouTube or Spotify link">
+        <button class="btn" onclick="changeMedia()">Change</button>
     </div>
 
     <!-- Drawing Canvas -->
@@ -121,10 +139,27 @@
             ctx.moveTo(event.clientX, event.clientY);
         }
 
+        function changeMedia() {
+            let mediaInput = document.getElementById("mediaInput").value;
+            let mediaContainer = document.getElementById("mediaContainer");
+            if (mediaInput.includes("youtube.com") || mediaInput.includes("youtu.be")) {
+                let embedUrl = mediaInput.replace("watch?v=", "embed/");
+                if (mediaInput.includes("youtu.be")) {
+                    embedUrl = "https://www.youtube.com/embed/" + mediaInput.split("/").pop();
+                }
+                mediaContainer.innerHTML = `<iframe width="560" height="315" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
+            } else if (mediaInput.includes("spotify.com")) {
+                let embedUrl = mediaInput.replace("/track/", "/embed/track/");
+                mediaContainer.innerHTML = `<iframe src="${embedUrl}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+            } else {
+                alert("Invalid link. Please enter a valid YouTube or Spotify link.");
+            }
+        }
+
         // Pause audio when the page loads
         window.onload = function() {
             let audio = document.getElementById("myAudio");
-            audio.pause();
+            if (audio) audio.pause();
         };
     </script>
 </body>
