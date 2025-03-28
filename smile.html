@@ -55,6 +55,7 @@
             height: 100vh;
             background: rgba(255, 255, 255, 0.2);
             cursor: crosshair;
+            display: none;
         }
     </style>
 </head>
@@ -71,6 +72,7 @@
     <br>
     <button class="btn" onclick="goBack()">Back</button>
     <button class="btn" onclick="clickCounter()">Click 5 Times</button>
+    <button class="btn" onclick="toggleDrawing()">Customize</button>
 
     <!-- Drawing Canvas -->
     <canvas id="drawingCanvas"></canvas>
@@ -80,6 +82,7 @@
         const canvas = document.getElementById("drawingCanvas");
         const ctx = canvas.getContext("2d");
         let drawing = false;
+        let drawingEnabled = false;
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -96,13 +99,17 @@
             }
         }
 
-        // Drawing functions
-        canvas.addEventListener("mousedown", () => drawing = true);
-        canvas.addEventListener("mouseup", () => drawing = false);
+        function toggleDrawing() {
+            drawingEnabled = !drawingEnabled;
+            canvas.style.display = drawingEnabled ? "block" : "none";
+        }
+
+        canvas.addEventListener("mousedown", () => { if (drawingEnabled) drawing = true; });
+        canvas.addEventListener("mouseup", () => { drawing = false; ctx.beginPath(); });
         canvas.addEventListener("mousemove", draw);
 
         function draw(event) {
-            if (!drawing) return;
+            if (!drawing || !drawingEnabled) return;
             ctx.lineWidth = 3;
             ctx.lineCap = "round";
             ctx.strokeStyle = "black";
